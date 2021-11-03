@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 
 class ScrollBox extends Component {
-  //scrollBottom 메서드 추가 -> App컴포넌트에서 ScrollBox에 ref를 달면 사용할 수 있다.
   scrollToBottom = () => {
-    //비구조화 할당 문법
     const { scrollHeight, clientHeight } = this.box;
+    /* 앞 코드에는 비구조화 할당 문법을 사용했습니다.
+         다음 코드와 같은 의미입니다.
+         const scrollHeight = this.box.scrollHeight;
+         const clientHeight = this.box.cliengHeight;
+      */
     this.box.scrollTop = scrollHeight - clientHeight;
   };
 
