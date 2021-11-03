@@ -15,6 +15,7 @@ const IterationSample = () => {
   const [nextId, setNextId] = useState(5);
 
   const onChange = (e) => setInputText(e.target.value);
+
   // onClick 함수에서 배열의 내장 함수 concat을 사용하여 새로운 항목을 추가한 배열을 만들자.
   // concat함수는 배열에 새 항목을 추가할 때 새로운 배열을 만들어 준다
   const onClick = () => {
@@ -27,8 +28,20 @@ const IterationSample = () => {
     setInputText("");
   };
 
+  // onRemove라는 함수를 만들어서 각 li요소에 이벤트 등록을 하자
+  const onRemove = (id) => {
+    const nextNames = names.filter((name) => name.id !== id);
+    setNames(nextNames);
+  };
+
   // map함수를 사용할 때 key값을 index대신 name.id 값으로 지정
-  const namesList = names.map((name) => <li key={name.id}> {name.text}</li>);
+  // onDoubleClick를 사용하여 HTML 요소를 더블클릭할때 이벤트를 설정
+  const namesList = names.map((name) => (
+    <li key={name.id} onDoubleClick={() => onRemove(name.id)}>
+      {" "}
+      {name.text}
+    </li>
+  ));
 
   return (
     <>
