@@ -6,6 +6,7 @@ const TodoList =
   ({
     todos,
     onRemove,
+    onToggle,
   }) => {
     return (
       <div className="TodoList">
@@ -22,6 +23,9 @@ const TodoList =
               }
               onRemove={
                 onRemove
+              }
+              onToggle={
+                onToggle
               }
             />
           ),
