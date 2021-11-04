@@ -1,16 +1,14 @@
 import React from "react";
-import ColorBox from "./components/ColorBox";
-import { ColorProvider } from "./contexts/color";
-import SelectColors from "./components/SelectColors";
+import { Route } from "react-router-dom";
+import About from "./About";
+import Home from "./Home";
 
 const App = () => {
   return (
-    <ColorProvider>
-      <div>
-        <SelectColors />
-        <ColorBox />
-      </div>
-    </ColorProvider>
+    <div>
+      <Route path="/" component={Home} />
+      <Route path="/about" component={About} />
+    </div>
   );
 };
 
