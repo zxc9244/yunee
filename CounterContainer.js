@@ -1,18 +1,32 @@
-/* eslint-disable no-unused-vars */
-
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Counter from '../components/Counter';
-import { increase, decrease } from '../modules/counter';
+import { changeInput, insert, toggle, remove } from '../modules/todos';
+import Todos from '../components/Todos';
 
-const CounterContainer = () => {
-  const number = useSelector((state) => state.counter.number);
+const TodosContainer = () => {
+  const { input, todos } = useSelector(({ todos }) => ({
+    input: todos.input,
+    todos: todos.todos,
+  }));
   const dispatch = useDispatch();
-  const onIncrease = useCallback(() => dispatch(increase()), [dispatch]);
-  const onDecrease = useCallback(() => dispatch(decrease()), [dispatch]);
+  const onChangeInput = useCallback(
+    (input) => dispatch(changeInput(input)),
+    [dispatch],
+  );
+  const onInsert = useCallback((text) => dispatch(insert(text)), [dispatch]);
+  const onToggle = useCallback((id) => dispatch(toggle(id)), [dispatch]);
+  const onRemove = useCallback((id) => dispatch(remove(id)), [dispatch]);
+
   return (
-    <Counter number={number} onIncrease={onIncrease} onDecrease={onDecrease} />
+    <Todos
+      input={input}
+      todos={todos}
+      onChangeInput={onChangeInput}
+      onInsert={onInsert}
+      onToggle={onToggle}
+      onRemove={onRemove}
+    />
   );
 };
 
-export default CounterContainer;
+export default TodosContainer;
