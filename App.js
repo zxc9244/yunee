@@ -1,14 +1,12 @@
-import React, { Component } from "react";
-import CSSModule from "./CSSModule";
+import React from "react";
+import styles from "./CSSModule.module.css";
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <CSSModule />
-      </div>
-    );
-  }
-}
+const CSSModule = () => {
+  return (
+    <div className={`${styles.wrapper} ${styles.inverted}`}>
+      안녕하세요, 저는 <span className="something">CSS Module!</span>
+    </div>
+  );
+};
 
-export default App;
+export default CSSModule;
