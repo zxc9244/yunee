@@ -12,6 +12,7 @@ const TodoListItem =
   ({
     todo,
     onRemove,
+    onToggle,
   }) => {
     const {
       id,
@@ -29,6 +30,11 @@ const TodoListItem =
               checked,
             },
           )}
+          onClick={() =>
+            onToggle(
+              id,
+            )
+          }
         >
           {checked ? (
             <MdCheckBox />
