@@ -11,8 +11,10 @@ import './TodoListItem.scss';
 const TodoListItem =
   ({
     todo,
+    onRemove,
   }) => {
     const {
+      id,
       text,
       checked,
     } =
@@ -39,7 +41,14 @@ const TodoListItem =
             }
           </div>
         </div>
-        <div className="remove">
+        <div
+          className="remove"
+          onClick={() =>
+            onRemove(
+              id,
+            )
+          }
+        >
           <MdRemoveCircleOutline />
         </div>
       </div>
