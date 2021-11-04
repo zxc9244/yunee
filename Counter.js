@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from 'react';
 
-const Counter = () => {
-  const [value, setValue] = useState(0);
-
+const Counter = ({ number, onIncrease, onDecrease }) => {
   return (
     <div>
-      <p>
-        현재 카운터 값은 <b>{value}</b>입니다.
-      </p>
-      <button onClick={() => setValue(value + 1)}>+1</button>
-      <button onClick={() => setValue(value - 1)}>-1</button>
+      <h1>{number}</h1>
+      <div>
+        <button onClick={onIncrease}>+1</button>
+        <button onClick={onDecrease}>-1</button>
+      </div>
     </div>
   );
 };
