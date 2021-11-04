@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import StyledComponent from "./StyledComponent";
+import React from 'react';
 
-class App extends Component {
-  render() {
+const App =
+  () => {
     return (
       <div>
-        <StyledComponent />
+        Todo
+        App을
+        만들자!
       </div>
     );
-  }
-}
+  };
 
 export default App;
