@@ -58,15 +58,16 @@ const App =
               checked: false,
             };
           setTodos(
-            todos.concat(
-              todo,
-            ),
+            (
+              todos,
+            ) =>
+              todos.concat(
+                todo,
+              ),
           );
-          nextId.current += 1; // nextId 1 씩 더하기
+          nextId.current += 1; // nextId 1씩 더하기
         },
-        [
-          todos,
-        ],
+        [],
       );
 
     const onRemove =
@@ -75,18 +76,19 @@ const App =
           id,
         ) => {
           setTodos(
-            todos.filter(
-              (
-                todo,
-              ) =>
-                todo.id !==
-                id,
-            ),
+            (
+              todos,
+            ) =>
+              todos.filter(
+                (
+                  todo,
+                ) =>
+                  todo.id !==
+                  id,
+              ),
           );
         },
-        [
-          todos,
-        ],
+        [],
       );
 
     const onToggle =
@@ -95,24 +97,25 @@ const App =
           id,
         ) => {
           setTodos(
-            todos.map(
-              (
-                todo,
-              ) =>
-                todo.id ===
-                id
-                  ? {
-                      ...todo,
-                      checked:
-                        !todo.checked,
-                    }
-                  : todo,
-            ),
+            (
+              todos,
+            ) =>
+              todos.map(
+                (
+                  todo,
+                ) =>
+                  todo.id ===
+                  id
+                    ? {
+                        ...todo,
+                        checked:
+                          !todo.checked,
+                      }
+                    : todo,
+              ),
           );
         },
-        [
-          todos,
-        ],
+        [],
       );
 
     return (
