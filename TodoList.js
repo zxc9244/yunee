@@ -5,6 +5,7 @@ import './TodoList.scss';
 const TodoList =
   ({
     todos,
+    onRemove,
   }) => {
     return (
       <div className="TodoList">
@@ -18,6 +19,9 @@ const TodoList =
               }
               key={
                 todo.id
+              }
+              onRemove={
+                onRemove
               }
             />
           ),
