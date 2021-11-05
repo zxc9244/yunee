@@ -1,18 +1,31 @@
-import { combineReducers } from "redux";
-import { all } from "redux-saga/effects";
-import counter, { counterSaga } from "./counter";
-import sample from "./sample";
-import loading from "./loading";
+/* eslint-disable no-unused-vars */
 
-const rootReducer = combineReducers({
-  counter,
-  sample,
-  loading,
-});
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import rootReducer, { rootSaga } from "./modules";
+// import loggerMiddleware from './lib/loggerMiddleware';
+import { createLogger } from "redux-logger";
+import ReduxThunk from "redux-thunk";
+import createSagaMiddleware from "redux-saga";
 
-export function* rootSaga() {
-  // all 함수는 여러 사가를 합쳐 주는 역할을 합니다.
-  yield all([counterSaga()]);
-}
+const logger = createLogger();
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  rootReducer,
+  applyMiddleware(logger, ReduxThunk, sagaMiddleware)
+);
+sagaMiddleware.run(rootSaga);
 
-export default rootReducer;
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
+
+serviceWorker.unregister();
