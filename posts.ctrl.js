@@ -1,7 +1,4 @@
-/* eslint-disable-no-unused-vars */
-
 import Post from '../../models/post';
-
 /*
   POST /api/posts
   {
@@ -28,7 +25,6 @@ export const write = async (ctx) => {
 /*
   GET /api/posts
 */
-
 export const list = async (ctx) => {
   try {
     const posts = await Post.find().exec();
@@ -37,9 +33,32 @@ export const list = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-
-export const read = (ctx) => {};
-
-export const remove = (ctx) => {};
-
+/*
+  GET /api/posts/:id
+*/
+export const read = async (ctx) => {
+  const { id } = ctx.params;
+  try {
+    const post = await Post.findById(id).exec();
+    if (!post) {
+      ctx.status = 404; // Not Found
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+/*
+  DELETE /api/posts/:id
+*/
+export const remove = async (ctx) => {
+  const { id } = ctx.params;
+  try {
+    await Post.findByIdAndRemove(id).exec();
+    ctx.status = 204; // No Content (성공하기는 했지만 응답할 데이터는 없음)
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
 export const update = (ctx) => {};
