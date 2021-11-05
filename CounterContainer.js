@@ -1,20 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
-import { increase, decrease } from "../modules/counter";
-import Counter from "../components/Counter";
+import Sample from "../components/Sample";
+import { getPost, getUsers } from "../modules/sample";
 
-const CounterContainer = ({ number, increase, decrease }) => {
+const { useEffect } = React;
+const SampleContainer = ({
+  getPost,
+  getUsers,
+  post,
+  users,
+  loadingPost,
+  loadingUsers,
+}) => {
+  // 클래스 형태 컴포넌트였다면 componentDidMount
+  useEffect(() => {
+    getPost(1);
+    getUsers(1);
+  }, [getPost, getUsers]);
   return (
-    <Counter number={number} onIncrease={increase} onDecrease={decrease} />
+    <Sample
+      post={post}
+      users={users}
+      loadingPost={loadingPost}
+      loadingUsers={loadingUsers}
+    />
   );
 };
 
 export default connect(
-  (state) => ({
-    number: state.counter,
+  ({ sample }) => ({
+    post: sample.post,
+    users: sample.users,
+    loadingPost: sample.loading.GET_POST,
+    loadingUsers: sample.loading.GET_USERS,
   }),
   {
-    increase,
-    decrease,
+    getPost,
+    getUsers,
   }
-)(CounterContainer);
+)(SampleContainer);
