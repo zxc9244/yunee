@@ -1,26 +1,11 @@
-const Koa = require('koa');
 const Router = require('koa-router');
-const bodyParser = require('koa-bodyparser');
+const postsCtrl = require('./posts.ctrl');
+const posts = new Router();
+posts.get('/', postsCtrl.list);
+posts.post('/', postsCtrl.write);
+posts.get('/:id', postsCtrl.read);
+posts.delete('/:id', postsCtrl.remove);
+posts.put('/:id', postsCtrl.replace);
+posts.patch('/:id', postsCtrl.update);
 
-const api = require('./api');
-
-const app = new Koa();
-const router = new Router();
-
-
-
-// 라우터 설정
-router.use('/api', api.routes()); // api 라우트 적용
-// 라우터 적용 전에 bodyParser 적용
-app.use(bodyParser());
-
-
-
-// app 인스턴스에 라우터 적용
-app.use(router.routes()).use(router.allowedMethods());
-
-
-
-app.listen(4000, () => {
-  console.log('Listening to port 4000');
-});
+module.exports = posts;
