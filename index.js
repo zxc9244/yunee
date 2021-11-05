@@ -10,7 +10,7 @@ import * as serviceWorker from "./serviceWorker";
 import rootReducer from "./modules";
 import loggerMiddleware from "./lib/loggerMiddleware";
 
-const store = createStore(rootReducer(loggerMiddleware));
+const store = createStore(rootReducer, applyMiddleware(loggerMiddleware));
 
 ReactDOM.render(
   <Provider store={store}>
