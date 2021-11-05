@@ -1,9 +1,10 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import Menu from "./components/Menu"; // ./components/
-import RedPage from "./pages/RedPage"; // ./pages/
-import BluePage from "./pages/BluePage"; // ./pages/
-import UsersPage from "./pages/UsersPage";
+import Menu from "./components/Menu";
+import loadable from "@loadable/component";
+const RedPage = loadable(() => import("./pages/RedPage"));
+const BluePage = loadable(() => import("./pages/BluePage"));
+const UsersPage = loadable(() => import("./pages/UsersPage"));
 
 const App = () => {
   return (
