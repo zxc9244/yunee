@@ -1,5 +1,12 @@
-// 이 파일에서만 no-global-assign ESLint 옵션을 비활성화합니다
-/* eslint-disable no-global-assign */
+import Router from 'koa-router';
+import * as postsCtrl from './posts.ctrl';
 
-require = require('esm')(module /*, options*/);
-module.exports = require('./main.js');
+const posts = new Router();
+posts.get('/', postsCtrl.list);
+posts.post('/', postsCtrl.write);
+posts.get('/:id', postsCtrl.read);
+posts.delete('/:id', postsCtrl.remove);
+posts.put('/:id', postsCtrl.replace);
+posts.patch('/:id', postsCtrl.update);
+
+export default posts;
