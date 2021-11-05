@@ -1,32 +1,18 @@
-/* eslint-disable-no-unused-vars */
+import React from "react";
+import { Route } from "react-router-dom";
+import Menu from "./components/Menu";
+import RedPage from "./pages/RedPage";
+import BluePage from "./pages/BluePage";
 
-import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import loadable from "@loadable/component";
-
-const SplitMe = loadable(() => import("./SplitMe"), {
-  fallback: <div>loading…</div>,
-});
-
-function App() {
-  const [visible, setVisible] = useState(false);
-  const onClick = () => {
-    setVisible(true);
-  };
-  const onMouseOver = () => {
-    SplitMe.preload();
-  };
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p onClick={onClick} onMouseOver={onMouseOver}>
-          Hello React!
-        </p>
-        {visible && <SplitMe />}
-      </header>
+    <div>
+      <Menu />
+      <hr />
+      <Route path="/red" component={RedPage} />
+      <Route path="/blue" component={BluePage} />
     </div>
   );
-}
+};
+
 export default App;
