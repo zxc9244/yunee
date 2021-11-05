@@ -1,21 +1,22 @@
-const Koa = require('koa');
 const Router = require('koa-router');
-
-const api = require('./api');
-
-const app = new Koa();
-const router = new Router();
+const posts = new Router();
 
 
-
-// 라우터 설정
-router.use('/api', api.routes()); // api 라우트 적용
-
-// app 인스턴스에 라우터 적용
-app.use(router.routes()).use(router.allowedMethods());
+const printInfo = ctx => {
+  ctx.body = {
+    method: ctx.method,
+    path: ctx.path,
+    params: ctx.params,
+  };
+};
 
 
 
-app.listen(4000, () => {
-  console.log('Listening to port 4000');
-});
+posts.get('/', printInfo);
+posts.post('/', printInfo);
+posts.get('/:id', printInfo);
+posts.delete('/:id', printInfo);
+posts.put('/:id', printInfo);
+posts.patch('/:id', printInfo);
+module.exports = posts;
+
