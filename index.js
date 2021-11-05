@@ -1,22 +1,14 @@
 const Router = require('koa-router');
-const posts = new Router();
+const posts = require('./posts');
 
 
-const printInfo = ctx => {
-  ctx.body = {
-    method: ctx.method,
-    path: ctx.path,
-    params: ctx.params,
-  };
-};
+const api = new Router();
 
 
 
-posts.get('/', printInfo);
-posts.post('/', printInfo);
-posts.get('/:id', printInfo);
-posts.delete('/:id', printInfo);
-posts.put('/:id', printInfo);
-posts.patch('/:id', printInfo);
-module.exports = posts;
+api.use('/posts', posts.routes());
 
+
+
+// 라우터를 내보냅니다.
+module.exports = api;
