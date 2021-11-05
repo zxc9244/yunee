@@ -1,10 +1,32 @@
-import { combineReducers } from "redux";
-import users, { usersSaga } from "./users";
-import { all } from "redux-saga/effects";
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { BrowserRouter } from "react-router-dom";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import createSagaMiddleware from "redux-saga";
+import rootReducer, { rootSaga } from "./modules";
 
-export function* rootSaga() {
-  yield all([usersSaga()]);
-}
+const sagaMiddleware = createSagaMiddleware();
 
-const rootReducer = combineReducers({ users });
-export default rootReducer;
+const store = createStore(
+  rootReducer,
+  window.__PRELOADEDSTATE_, // 이 값을 초기 상태로 사용함
+  applyMiddleware(thunk, sagaMiddleware)
+);
+
+sagaMiddleware.run(rootSaga);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("root")
+);
+
+serviceWorker.unregister();
