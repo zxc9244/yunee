@@ -11,7 +11,6 @@ const post = new Router(); // /api/posts/:id
 post.get('/', postsCtrl.read);
 post.delete('/', checkLoggedIn, postsCtrl.checkOwnPost, postsCtrl.remove);
 post.patch('/', checkLoggedIn, postsCtrl.checkOwnPost, postsCtrl.update);
-
 posts.use('/:id', postsCtrl.getPostById, post.routes());
 
 export default posts;
