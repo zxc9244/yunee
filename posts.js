@@ -1,42 +1,23 @@
-/* eslint-disable-no-unused-vars */
+import qs from 'qs';
+import client from './client';
 
-import { createAction, handleActions } from 'redux-actions';
-import createRequestSaga, {
-  createRequestActionTypes,
-} from '../lib/createRequestSaga';
-import * as postsAPI from '../lib/api/posts';
-import { takeLatest } from 'redux-saga/effects';
+export const writePost = ({ title, body, tags }) =>
+  client.post('/api/posts', { title, body, tags });
 
-const [LIST_POSTS, LIST_POSTS_SUCCESS, LIST_POSTS_FAILURE] =
-  createRequestActionTypes('posts/LIST_POSTS');
+export const readPost = (id) => client.get(`/api/posts/${id}`);
 
-export const listPosts = createAction(
-  LIST_POSTS,
-  ({ tag, username, page }) => ({ tag, username, page }),
-);
-
-const listPostsSaga = createRequestSaga(LIST_POSTS, postsAPI.listPosts);
-export function* postsSaga() {
-  yield takeLatest(LIST_POSTS, listPostsSaga);
-}
-
-const initialState = {
-  posts: null,
-  error: null,
-  lastPage: 1,
+export const listPosts = ({ page, username, tag }) => {
+  const queryString = qs.stringify({
+    page,
+    username,
+    tag,
+  });
+  return client.get(`/api/posts?${queryString}`);
 };
 
-const posts = handleActions(
-  {
-    [LIST_POSTS_SUCCESS]: (state, { payload: posts, meta: response }) => ({
-      ...state,
-      posts,
-      lastPage: parseInt(response.headers['last-page'], 10), // 문자열을 숫자로 변환
-    }),
-    [LIST_POSTS_FAILURE]: (state, { payload: error }) => ({
-      ...state,
-      error,
-    }),
-  },
-  initialState,
-);
+export const updatePost = ({ id, title, body, tags }) =>
+  client.patch(`/api/posts/${id}`, {
+    title,
+    body,
+    tags,
+  });
