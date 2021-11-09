@@ -1,11 +1,10 @@
 import Router from 'koa-router';
-import * as postsCtrl from './posts.ctrl';
+import * as authCtrl from './auth.ctrl';
+const auth = new Router();
 
-const posts = new Router();
-posts.get('/', postsCtrl.list);
-posts.post('/', postsCtrl.write);
-posts.get('/:id', postsCtrl.checkObjectId, postsCtrl.read);
-posts.delete('/:id', postsCtrl.checkObjectId, postsCtrl.remove);
-posts.patch('/:id', postsCtrl.checkObjectId, postsCtrl.update);
+auth.post('/register', authCtrl.register);
+auth.post('/login', authCtrl.login);
+auth.get('/check', authCtrl.check);
+auth.post('/logout', authCtrl.logout);
 
-export default posts;
+export default auth;
