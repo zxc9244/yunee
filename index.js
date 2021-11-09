@@ -1,8 +1,20 @@
-import { combineReducers } from 'redux';
-import auth from './auth';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import rootReducer from './modules';
 
-const rootReducer = combineReducers({
-  auth,
-});
+const store = createStore(rootReducer, composeWithDevTools());
 
-export default rootReducer;
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById('root'),
+);
