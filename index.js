@@ -1,15 +1,28 @@
-import { combineReducers } from 'redux';
-import { all } from 'redux-saga/effects';
-import auth, { authSaga } from './auth';
-import loading from './loading';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer, { rootSaga } from './modules';
 
-const rootReducer = combineReducers({
-  auth,
-  loading,
-});
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware)),
+);
 
-export function* rootSaga() {
-  yield all([authSaga()]);
-}
+sagaMiddleware.run(rootSaga);
 
-export default rootReducer;
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById('root'),
+);
+sagaMiddleware.run(rootSaga);
